@@ -47,12 +47,7 @@ def local_execute_command(command):
                 print(f.read())
         except Exception as e:
             print(f"Error: {e}")
-    elif cmd == "chmod":
-        mode, file_name = parts[1], parts[2]
-        try:
-            os.chmod(file_name, int(mode, 8))
-        except Exception as e:
-            print(f"Error: {e}")
+
     elif cmd == "pwd":
         print(os.getcwd())
     elif cmd == "cp":
@@ -67,12 +62,7 @@ def local_execute_command(command):
             shutil.move(src, dest)
         except Exception as e:
             print(f"Error: {e}")
-    elif cmd == "find":
-        path, pattern = parts[1], parts[2]
-        for root, dirs, files in os.walk(path):
-            for name in files:
-                if pattern in name:
-                    print(os.path.join(root, name))
+
     elif cmd == "grep":
         pattern, file_name = parts[1], parts[2]
         try:
@@ -83,18 +73,6 @@ def local_execute_command(command):
                         print(line.strip())
         except Exception as e:
             print(f"Error: {e}")
-    elif cmd == "zip":
-        source, zip_name = parts[1], parts[2]
-        with zipfile.ZipFile(zip_name, 'w') as zipf:
-            for foldername, subfolders, filenames in os.walk(source):
-                for filename in filenames:
-                    zipf.write(os.path.join(foldername, filename))
-        print(f"Directory '{source}' zipped as '{zip_name}'.")
-    elif cmd == "unzip":
-        zip_name, destination = parts[1], parts[2] if len(parts) > 2 else "."
-        with zipfile.ZipFile(zip_name, 'r') as zipf:
-            zipf.extractall(destination)
-        print(f"'{zip_name}' unzipped to '{destination}'.")
         
     elif cmd == "append":
         file_name = parts[1]
@@ -134,21 +112,21 @@ def local_execute_command(command):
 
     elif cmd == "help":
         help_messages = {
-            "ls": "List directory contents. Usage: ls [-al]",
+            "ls": "List directory contents. Usage: ls",
             "mkdir": "Create a directory. Usage: mkdir [directory_name]",
             "touch": "Create a file. Usage: touch [file_name]",
             "rm": "Remove a file. Usage: rm [file_name]",
             "rmdir": "Remove a directory. Usage: rmdir [directory_name]",
             "cat": "Display file contents. Usage: cat [file_name]",
-            "chmod": "Change file permissions. Usage: chmod [mode] [file_name]",
+            # "chmod": "Change file permissions. Usage: chmod [mode] [file_name]",
             "cd": "Change directory. Usage: cd [path]",
             "pwd": "Print working directory.",
             "cp": "Copy a file. Usage: cp [source] [destination]",
             "mv": "Move a file. Usage: mv [source] [destination]",
-            "find": "Find files by name. Usage: find [path] [pattern]",
+            # "find": "Find files by name. Usage: find [path] [pattern]",
             "grep": "Search for a pattern in a file. Usage: grep [pattern] [file_name]",
-            "zip": "Compress files into a zip archive. Usage: zip [archive_name] [file1] [file2] ...",
-            "unzip": "Extract files from a zip archive. Usage: unzip [archive_name]",
+            # "zip": "Compress files into a zip archive. Usage: zip [archive_name] [file1] [file2] ...",
+            # "unzip": "Extract files from a zip archive. Usage: unzip [archive_name]",
             "append": "Append text to a file. Usage: append [file_name] [text]",
             "edit": "Edit a file's content. Usage: edit [file_name]",
             "clear": "Clear the terminal",
